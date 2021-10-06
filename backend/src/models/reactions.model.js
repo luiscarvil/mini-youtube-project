@@ -18,4 +18,4 @@ const reactionSchema = mongoose.Schema({
     },
 })
 reactionSchema.index({video_id:1, user_id:1}, {unique:true})
-export const Reactions = mongoose.model('Reactions', reactionSchema)
+export const ReactionsModel = mongoose.model('Reactions', reactionSchema)

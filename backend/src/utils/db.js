@@ -1,5 +1,5 @@
 import mongoose from 'mongoose'
-import { Users, Videos, Reactions } from '../models/index.js'
+import { UsersModel, VideosModel, ReactionsModel } from '../models/index.js'
 import jwt from 'jsonwebtoken'
 
 
@@ -30,12 +30,12 @@ const reactionsOne = {
     user_id: userOne._id
 }
 export const setUpDatabase = async () =>{
-    await Users.deleteMany(),
-    await Videos.deleteMany(),
-    await Reactions.deleteMany(),
-    await new Users(userOne).save()
-    await new Videos(videosOne).save()
-    await new Reactions(reactionsOne).save()
+    await UsersModel.deleteMany(),
+    await VideosModel.deleteMany(),
+    await ReactionsModel.deleteMany(),
+    await new UsersModel(userOne).save()
+    await new VideosModel(videosOne).save()
+    await new ReactionsModel(reactionsOne).save()
     return "done"
 }
 

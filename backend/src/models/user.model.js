@@ -36,4 +36,4 @@ import validator from 'validator'
 }
 )
 
-export const Users = mongoose.model('Users', userSchema)
+export const UsersModel = mongoose.model('Users', userSchema)
