@@ -5,18 +5,21 @@ export class VideosController extends BaseController {
     super();
   }
 
-  uploadFile = (req, res, next) => {
+  uploadFile = async (req, res, next) => {
     try {
       const serviceS3 = new this.services.S3Service(req.file);
-      await serviceS3.upload();
+      const videoService = new this.services.VideosService(req.body)
+      const fileUpload = await serviceS3.uploadFile();
+      await videoService.saveVideo(fileUpload.key)
       res.send({ message: "Archivo cargado satisfactoriamente", error: null });
     } catch (error) {
       console.log(error);
       next(error);
     }
   };
+  
 
-  removeFile = (req, res, next) => {
+  removeFile = async (req, res, next) => {
     const params = req.params;
     try {
       const serviceVideos = new this.services.VideosService(null, params);

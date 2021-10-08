@@ -8,4 +8,4 @@ const controller = new VideosController()
 
 const multerUsg = multer()
 
-videosRouter.post(`${prefix}/upload-video`, multer.single('file'), controller.uploadFile)
+videosRouter.post(`${prefix}/upload-video`, multerUsg.single('file'), controller.uploadFile)

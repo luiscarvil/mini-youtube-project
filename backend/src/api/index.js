@@ -2,6 +2,7 @@ import http from 'http'
 import express from 'express'
 import  mongooseConection from '../db/mongoose.js'
 import {config} from '../utils/index.js'
+import * as routes from '../routes/index.js'
 
 export default class Api {
     constructor(){
@@ -16,8 +17,19 @@ export default class Api {
                 path: '/mini-youtube'
             })
         })
+        this.mountRoutes()
     }
-
+    mountRoutes() {
+        // versioned routes
+        const {routesV1} = routes
+        for (const route in routesV1) {
+          //console.log(`Router ${route} mounted `)
+          this.app.use('/mini-youtube', routesV1[route])
+        }
+    
+        this.#mountDefaultRoute()
+    
+      }
     initializeServer() {
         const server = http.createServer(this.app)
 
@@ -27,6 +39,12 @@ export default class Api {
         })
         return server
     }
+    #mountDefaultRoute = () => {
+        this.app.all('*', (req, res) => {
+          const message = `${req.method} to ${req.get('host')}${req.originalUrl} not found`
+          res.status(404).send({message})
+        })
+      }
 /* 
     setEnvironment = () =>{
         switch (process.env.ENVIRONMENT){

@@ -10,7 +10,7 @@ export const videoSchema = mongoose.Schema({
         type: String,
         trim:true
     },
-    video_url:{
+    video_key:{
         type:String,
         required:true,
         trim:true,
