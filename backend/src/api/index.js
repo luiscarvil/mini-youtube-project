@@ -7,6 +7,8 @@ import * as routes from '../routes/index.js'
 export default class Api {
     constructor(){
         this.app = express()
+
+        this.initializeMiddlewares()
         this.initializeRoutes()
     }
     initializeRoutes(){
@@ -29,6 +31,18 @@ export default class Api {
     
         this.#mountDefaultRoute()
     
+      }
+      createMorganTokens(){
+        morgan.token('body', function (req, res) {
+            return JSON.stringify(req.body)
+          })
+      }
+      initializeMiddlewares(){
+          //this.createMorganTokens()
+          this.app.use(express.json())
+          this.app.use(express.urlencoded({
+              extended:true
+          }))
       }
     initializeServer() {
         const server = http.createServer(this.app)

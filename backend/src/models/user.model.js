@@ -1,6 +1,8 @@
 import  mongoose from "mongoose";
 import validator from 'validator'
- const userSchema = mongoose.Schema({
+
+
+const userSchema = mongoose.Schema({
     name: {
         type: String,
         required: true,
@@ -18,17 +20,21 @@ import validator from 'validator'
             }
         }
     },
-    password: {
-        type: String,
+    // validar que tipo de usuario solo adminta [ admin, user]
+    userType:{
+        type:String,
+        required:true,
+        trim:true
+    },
+    state:{
+        type: Boolean,
         required: true,
-        minlength: 7,
-        trim: true,
+        trim:true
     },
     age:     { type: Number, min: 18, max: 65 },
     tokens: [{
         token: {
-            type: String,
-            required: true
+            type: String
         }
     }],
 },{

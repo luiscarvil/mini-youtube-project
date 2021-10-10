@@ -1,6 +1,6 @@
 import  mongoose from "mongoose";
 
-export const videoSchema = mongoose.Schema({
+const videoSchema = mongoose.Schema({
     title: {
         type: String,
         required:true,
