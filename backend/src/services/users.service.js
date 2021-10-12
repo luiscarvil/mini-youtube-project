@@ -16,11 +16,11 @@ export class UserService extends BaseService {
         userType,
         state,
       };
-      console.log("here the creation", userForm);
+     // console.log("here the creation", userForm);
       return await new this.model.UsersModel(userForm).save();
     } catch (err) {
       console.log(err);
-      throw new this.errors.CustomError("Error al crear usuario");
+      throw new this.errors.CustomError(`Error al crear usuario : ${err.message}`);
     }
   };
 
@@ -30,11 +30,11 @@ export class UserService extends BaseService {
       const userForm = {
         state,
       };
-      console.log("here the creation 2", userForm);
+      // console.log("here the creation 2", userForm);
       return await this.model.UsersModel.findOneAndUpdate({email},{state});
     } catch (err) {
       console.log(err);
-      throw new this.errors.CustomError("Error al crear usuario");
+      throw new this.errors.CustomError(`Error al actualizar usuario : ${err.message}`);
     }
   };
 

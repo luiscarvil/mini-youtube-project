@@ -3,6 +3,8 @@ import express from 'express'
 import  mongooseConection from '../db/mongoose.js'
 import {config} from '../utils/index.js'
 import * as routes from '../routes/index.js'
+import helmet from 'helmet'
+import { CustomError } from '../errors/custom.error.js'
 
 export default class Api {
     constructor(){
@@ -20,6 +22,7 @@ export default class Api {
             })
         })
         this.mountRoutes()
+        this.app.use(this.errorHandler)
     }
     mountRoutes() {
         // versioned routes
@@ -32,6 +35,9 @@ export default class Api {
         this.#mountDefaultRoute()
     
       }
+      jsonErrorHandler = async (err, req, res, next) => {
+        res.status(500).send({ error: err });
+      }
       createMorganTokens(){
         morgan.token('body', function (req, res) {
             return JSON.stringify(req.body)
@@ -43,6 +49,8 @@ export default class Api {
           this.app.use(express.urlencoded({
               extended:true
           }))
+          // Helmet secure  Express apps by setting various HTTP headers
+          this.app.use(helmet())
       }
     initializeServer() {
         const server = http.createServer(this.app)
@@ -59,6 +67,31 @@ export default class Api {
           res.status(404).send({message})
         })
       }
+
+
+      errorHandler(err, req, res, next) {
+        // atrapar el id de la request
+      if (!err){
+          next()
+      }
+      if (err instanceof CustomError) {
+            console.log('CustomError :', err)
+            return res.status(err.code).send({ ...err.serialize(), requestId: req?.requestId })
+          }
+      
+          //res.status(500).send({message: 'To Do error handler...'})
+      
+          console.log('Error without handle =>', err)
+      
+          return res.status(500).send({
+            err: err.message,
+            message: 'Error inesperado.',
+            data: null,
+            requestId: req?.requestId
+          })
+      
+  }
+      
 /* 
     setEnvironment = () =>{
         switch (process.env.ENVIRONMENT){

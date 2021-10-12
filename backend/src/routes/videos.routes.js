@@ -9,3 +9,5 @@ const controller = new VideosController()
 const multerUsg = multer()
 
 videosRouter.post(`${prefix}/upload-video`, multerUsg.single('file'), controller.uploadFile)
+
+videosRouter.get(`${prefix}/search-video/:videoId`, controller.streamVideo)

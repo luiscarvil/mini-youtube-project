@@ -17,6 +17,22 @@ export class VideosController extends BaseController {
       next(error);
     }
   };
+
+  streamVideo = async (req, res, next) => {
+    try {
+      const videoService = new this.services.VideosService(req.body)
+      const serviceS3 = new this.services.S3Service(req.file);
+      const findVideo = await videoService.searchVideoById();
+      if (!findVideo.video_key){
+        throw new this.errors.CustomError("No se ha encontrado el video")
+      }
+      const readStream = await serviceS3.getFileStream(findVideo.video_key)
+      readStream.pipe(res)  
+     } catch (error) {
+      console.log(error);
+      next(error);
+    }
+  };
   
 
   removeFile = async (req, res, next) => {
