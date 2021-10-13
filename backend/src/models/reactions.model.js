@@ -2,9 +2,13 @@ import mongoose from "mongoose";
 
 const reactionSchema = mongoose.Schema({
     interaction: {
-        type:Boolean,
+        type:Number,
         required: true,
-        trim:true
+        trim:true,
+        enum: {
+            values: [1, 2, 3, 4, 5],
+            message: '{VALUE} is not supported'
+          }
     },
     video_id:{
         type: mongoose.Schema.Types.ObjectId,

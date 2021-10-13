@@ -11,7 +11,6 @@ export class AuthController extends BaseController{
         this.USER_TYPE = 'propietario'
       }
     signUp = async (req, res, next) =>{
-        console.log("here")
         const body = req.body
         const userState = this.USER_CREATED
         const userType = this.USER_TYPE

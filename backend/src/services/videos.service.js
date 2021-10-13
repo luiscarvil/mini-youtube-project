@@ -14,7 +14,7 @@ export class VideosService extends BaseService {
             video_key,
             user_owner: this.mongooseId
         }
-        console.log("here the creation", videoForm)
+        //console.log("here the creation", videoForm)
         return await new this.model.VideosModel(videoForm).save()
     } catch(err){
         console.log(err)
@@ -22,10 +22,21 @@ export class VideosService extends BaseService {
     }
     }
     searchVideoById = async () => {
+       // console.log("-------->", this.params)
         const { _id } = this.params
         return this.model.VideosModel.findById(_id)
     }
     deleteVideoById = async (_id) => {
         return this.model.VideosModel.deleteOne({_id})
+    }
+    searchAllVideos = async () =>{
+        return this.model.VideosModel.find()
+    }
+
+    searchVideoByWord = async () => {
+        const { filter } = this.params
+        // regex to search with filter caseinsensitive
+        return this.model.VideosModel.find({ title: { "$regex": filter, "$options": "i" } })
+        //TODO paginado para los  videos .limit(limit).skip(page*limit)
     }
 }

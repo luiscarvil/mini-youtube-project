@@ -20,7 +20,7 @@ export class VideosController extends BaseController {
 
   streamVideo = async (req, res, next) => {
     try {
-      const videoService = new this.services.VideosService(req.body)
+      const videoService = new this.services.VideosService(null,req.params)
       const serviceS3 = new this.services.S3Service(req.file);
       const findVideo = await videoService.searchVideoById();
       if (!findVideo.video_key){
@@ -54,4 +54,29 @@ export class VideosController extends BaseController {
       next(error);
     }
   };
+
+  searchAll = async (req, res, next) =>{
+    try {
+      const serviceVideos = new this.services.VideosService();
+      const findVideo = await serviceVideos.searchAllVideos()
+      console.log("f", findVideo)
+      res.send(findVideo)
+    } catch (err) {
+      console.log(err)
+      next(err)
+    }
+  }
+
+  searchByWords = async (req, res, next) =>{
+    const params = req.params
+    try {
+      const serviceVideos = new this.services.VideosService(null, params);
+      const findVideo = await serviceVideos.searchVideoByWord()
+      console.log("f", findVideo)
+      res.send({ message: "Archivo cargado satisfactoriamente", error: null })
+    } catch (err) {
+      console.log(err)
+      next(err)
+    }
+  }
 }

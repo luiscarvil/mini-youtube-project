@@ -1,1 +1,1 @@
-export * from './validate-request.middleware.js'
+export * from './request.middleware.js'

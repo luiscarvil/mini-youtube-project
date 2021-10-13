@@ -10,3 +10,7 @@ export const verifySignUp = [
     body('email').isEmail().notEmpty(),
     body('code').isString().notEmpty()
 ]
+export const verifySignIn = [
+    body('email').isEmail().notEmpty(),
+    body('password').isString().notEmpty()
+]

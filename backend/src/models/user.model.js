@@ -20,23 +20,25 @@ const userSchema = mongoose.Schema({
             }
         }
     },
-    // validar que tipo de usuario solo adminta [ admin, user]
     userType:{
         type:String,
-        required:true,
-        trim:true
+        default:"user",
+        trim:true,
+       /*  enum: {
+            values: ["admin","user"],
+            message: '{VALUE} is not supported'
+          } */
     },
     state:{
         type: Boolean,
         required: true,
         trim:true
     },
-    age:     { type: Number, min: 18, max: 65 },
-    tokens: [{
-        token: {
-            type: String
-        }
-    }],
+    age:     { 
+        type: Number,
+        min: 18,
+        default: 18
+    }
 },{
     timestamps: true,
 }

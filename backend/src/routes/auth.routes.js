@@ -1,6 +1,6 @@
 import {Router} from 'express'
 import { AuthController } from '../controllers/auth.controller.js'
-import { sigInValidator, verifySignUp } from '../validators/auth.validator.js'
+import { sigInValidator, verifySignUp, verifySignIn } from '../validators/index.js'
 import { validRequest } from '../middleware/request.middleware.js'
 export const authRouter = Router()
 const prefix = '/auth'
@@ -19,4 +19,4 @@ authRouter.post(`${prefix}/signUp`, sigInValidator, validRequest, controller.sig
 authRouter.post(`${prefix}/verify-signUp`, verifySignUp, validRequest, controller.verifySignUp)
 
 // validar correo (email valido) y contraseña (no en blanco y string)
-authRouter.post(`${prefix}/signIn`, controller.signIn)
+authRouter.post(`${prefix}/signIn`, verifySignIn, validRequest, controller.signIn)
