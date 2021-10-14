@@ -10,6 +10,12 @@ const videoSchema = mongoose.Schema({
         type: String,
         trim:true
     },
+    thumbnail:{
+        type:String,
+        required:true,
+        trim:true,
+        default: 'https://developers.google.com/web/updates/images/generic/play-outline.png?hl=es'
+    },
     video_key:{
         type:String,
         required:true,

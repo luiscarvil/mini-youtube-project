@@ -19,3 +19,4 @@ videosRouter.get(`${prefix}/searchAll`, controller.searchAll)
 
 videosRouter.get(`${prefix}/searchByWord/:filter`,filterValidator, validRequest, controller.searchByWords)
 
+videosRouter.put(`${prefix}/update-thumbnails`, multerUsg.single('file'), controller.uploadVideoThumbnails)
