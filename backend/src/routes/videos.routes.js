@@ -17,6 +17,8 @@ videosRouter.get(`${prefix}/searchById/:_id`, videoIdValidator, validRequest,  c
 
 videosRouter.get(`${prefix}/searchAll`, controller.searchAll)
 
+
+// TODO agregar paginador para este endpoint
 videosRouter.get(`${prefix}/searchByWord/:filter`,filterValidator, validRequest, controller.searchByWords)
 
 videosRouter.put(`${prefix}/update-thumbnails`, multerUsg.single('file'), controller.uploadVideoThumbnails)

@@ -1,5 +1,6 @@
 import http from 'http'
 import express from 'express'
+import cors from 'cors'
 import  mongooseConection from '../db/mongoose.js'
 import {config} from '../utils/index.js'
 import * as routes from '../routes/index.js'
@@ -7,6 +8,15 @@ import helmet from 'helmet'
 import { CustomError } from '../errors/custom.error.js'
 
 export default class Api {
+  headers = ['Content-Type', 'Authorization']
+  get allowedOrigins() {
+    let result = [
+      'http://localhost:3000'
+    ]
+   
+    
+    return result
+  }
     constructor(){
         this.app = express()
 
@@ -49,8 +59,21 @@ export default class Api {
           this.app.use(express.urlencoded({
               extended:true
           }))
+          const allowedOrigins = this.allowedOrigins
           // Helmet secure  Express apps by setting various HTTP headers
           this.app.use(helmet())
+          this.app.use(cors({
+            allowedHeaders: this.headers,
+            methods: ['GET', 'POST', 'PUT', 'DELETE'],
+            exposedHeaders: this.headers,
+            origin: function (origin, callback) {
+              console.log('request origin ---->', origin)
+              if (allowedOrigins.indexOf(origin) === -1) {
+                 return callback(new CustomError('Acceso no permitido '), false)
+              }
+              return callback(null, true)
+            }
+          }))
       }
     initializeServer() {
         const server = http.createServer(this.app)

@@ -1,6 +1,4 @@
 import { BaseController } from "./base.controller.js";
-import ffmpeg from "fluent-ffmpeg";
-import spawn from 'child_process'
 
 export class VideosController extends BaseController {
   constructor() {
@@ -8,6 +6,7 @@ export class VideosController extends BaseController {
   }
 
   uploadFile = async (req, res, next) => {
+    console.log("here the body", req.body)
     try {
       const serviceS3 = new this.services.S3Service(req.file);
       const videoService = new this.services.VideosService(req.body)
@@ -81,9 +80,9 @@ export class VideosController extends BaseController {
     try {
       const serviceVideos = new this.services.VideosService();
       const findVideo = await serviceVideos.searchAllVideos()
-      const conv = ffmpeg()
+   /*    const conv = ffmpeg()
       console.log("f", findVideo)
-      res.send(findVideo)
+   */    res.send(findVideo)
     } catch (err) {
       console.log(err)
       next(err)
@@ -95,8 +94,7 @@ export class VideosController extends BaseController {
     try {
       const serviceVideos = new this.services.VideosService(null, params);
       const findVideo = await serviceVideos.searchVideoByWord()
-      console.log("f", findVideo)
-      res.send({ message: "Archivo cargado satisfactoriamente", error: null })
+      res.send(findVideo)
     } catch (err) {
       console.log(err)
       next(err)
