@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import swal from 'sweetalert'
-import Header from '../Header';
 import axios from 'axios';
+import Header2 from '../Header2';
 
 const token = localStorage.getItem('token')
-
+const email = localStorage.getItem('email')
 function UploadFile() {
     const [file, setFile]=useState('');
     const [title, setTitle]=useState('');
@@ -35,13 +35,22 @@ function UploadFile() {
           );
         })
         .catch((error) => {
-          swal({
-            title: "Error",
-            text: `${error.response.data.message}`,
-            buttons: { cancel: "Close" },
-            icon: "warning"
-          });
-          //swal(error.message);
+            if (parseInt(error.response.data.code) === 401){
+                swal({
+                  title: "Error Code",
+                  text: `${error.response.data.message}`,
+                  buttons: { cancel: "Close" },
+                  icon: "warning"
+                }).then(
+                  () => (window.location = "/signIn"))
+              } else{
+                swal({
+                  title: "Error",
+                      text: `${error.response.data.message}`,
+                      buttons: { cancel: "Close" },
+                      icon: "warning"
+                    });
+                  }
         });
     };
     
@@ -67,9 +76,9 @@ function UploadFile() {
       
         return (
             <div>
-            <Header />
+            <Header2 email={email}/>
             <div className="App1">
-            <h2>Formulario</h2>
+            <h2>Carga de Videos</h2>
             <form onSubmit={ saveData } >
                 <input 
                     type="text"

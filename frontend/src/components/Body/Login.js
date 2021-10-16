@@ -91,23 +91,17 @@ const LoginCard = ()=>{
                 />
                 
                 <br /><br />
-                <button className="btn btn-outline-primary form-control" onClick={(e)=>Login()}>Log in</button>
+                <button className="btn btn-primary col-md-3" onClick={(e)=>Login()}>Log in</button>
                 
-                <button 
-                    className="btn btn-outline-primary form-control"
-                        
-                    style={{
-                        marginRight: "10px",
-                    }}
-                >
-
-                    <i className="bi bi-box-arrow-in-right"></i> Sign Up    
-                </button>
-{                <button 
+              
+                    <a type="button" href="/signUp" className="btn btn-primary col-md-3">Registrate</a>
+               
+               
+{/* {                <button 
                     className="btn btn-outline-primary form-control"
                 > 
                     <i className="bi bi-box-arrow-in-right"></i> Forgot Password    
-                </button> }
+                </button> } */}
             </form>
         </div> 
                        

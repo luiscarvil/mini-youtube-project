@@ -3,6 +3,8 @@ import Header from "../Header";
 import Body from "./index";
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import swal from "sweetalert";
+
 
 const routeBack = 'http://localhost:3500'
 function Home() {
@@ -18,11 +20,10 @@ function Home() {
   const [data, setData] = useState({});
   // add token to a variable
   const token = localStorage.getItem('token')
-
+  const email = localStorage.getItem('email')
+  
 // search calification to current video 
   // function retrive data
-  const [secret, setSecret] = useState({ value: "", countSecrets: 0 });
-
 
   const searchData = async(text) => {
     setSearch(text);
@@ -36,7 +37,25 @@ function Home() {
       //  console.log("here", currentVideo)
         setIsLoading(false)
       })
-      .catch((err) => console.log(err));
+      .catch((error) => {
+        if (parseInt(error.response.data.code) === 401){
+          swal({
+            title: "Error Code",
+            text: `${error.response.data.message}`,
+            buttons: { cancel: "Close" },
+            icon: "warning"
+          }).then(
+            () => (window.location = "/signIn"))
+        } else{
+          swal({
+            title: "Error",
+                text: `${error.response.data.message}`,
+                buttons: { cancel: "Close" },
+                icon: "warning"
+              });
+            }
+        
+      });
 
     };
     const changeCurrentVideo = async(video) =>{
@@ -44,28 +63,25 @@ function Home() {
     }
 
     const searchReaction = async() => {
-      console.log("HHHHHHHHHHHHHH-->", currentVideo)
-      console.log("Here the currentVideo", currentVideo)
       await axios
       .get(`${routeBack}/mini-youtube/reactions/find-reactions/${currentVideo._id}`, { headers:{ Authorization: token}})
       .then((reaction) => {
           setCurrentReaction(reaction.data.total)
-          console.log("here--------->", reaction.data)
           setIsLoading(false)
         })
-        .catch((err) => console.log(err));
+        .catch((err) => {console.log(err)});
     
       };
       
       
       useEffect (() => {
         searchData("video")
-        searchReaction()
-     }, [])
+        //searchReaction()
+     },[])
 
   return (
     <div className="App">
-      <Header search={searchData}  />
+      <Header search={searchData} />
       <Body currentVideo={currentVideo} isLoading={isLoading} videos= {data} changeCurrentVideo={changeCurrentVideo}  currentReaction={currentReaction}/>
     </div>
   );

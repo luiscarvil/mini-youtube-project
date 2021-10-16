@@ -7,28 +7,15 @@ import {useHistory} from 'react-router-dom'
 
 
     
-const Header = (props) => {
+const Header2 = ({email}) => {
 
-  const email = ""
-  console.log("here the email", props)
     // input data//
     const [text, setText] = useState('')
     // on submit function
     const handleSubmit = (e) =>{
         e.preventDefault();
-        console.log("here the props", props, text)
-        if (text && props){
-        props.search(text)
-        } else {
-          swal({
-            title: "Respuesta",
-            text: `No se encontraron resultados`,
-            buttons: { cancel: "Close" },
-            
-          })
-          console.log("Nothing to search...")
         }
-    }
+    
     const LogOut=()=>{
   
       console.log("here")
@@ -74,20 +61,6 @@ const Header = (props) => {
               <a type="button" href="/" class="btn btn-primary col-md-3">Home</a>
               <a type="button" href="/uploadVideo" class="btn btn-primary col-md-3">Cargar Video</a>
               
-              <input
-                type="text"
-                name="search"
-                id="search"
-                placeholder="buscar video aquí"
-                className="form-control col-md-10"
-                value={text}
-                onChange={(e)=>setText(e.target.value)}
-              />
-              <input
-                type="submit"
-                value="Buscar"
-                className="btn btn-primary col-md-3"
-              />
               <a type="button"  className="btn btn-primary col-md-3 " onClick={(e)=>LogOut()}>
                 <b>Cerrar Sesion</b></a>
             </div>
@@ -99,4 +72,4 @@ const Header = (props) => {
     </div>
   );
 };
-export default Header;
+export default Header2;

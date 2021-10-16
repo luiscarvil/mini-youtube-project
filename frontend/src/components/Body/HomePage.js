@@ -7,6 +7,7 @@ import {
 import Home from './Home'
 import Login from './Login'
 import UploadFile from './UploadVideo';
+import SignUp from './SignUp';
 export default class HomePage extends Component {
   render()  {
     return (
@@ -28,10 +29,11 @@ export default class HomePage extends Component {
 
                         <Route path="/uploadVideo" exact>
                             <UploadFile />
+                            
                         </Route>
-                        <Route path="/singOut" exact>
-                            <Home />
-                        </Route>                        
+                        <Route path="/signUp" exact>
+                            <SignUp />   
+                            </Route>                  
                     </Switch>
                 </div>
             </Router>   
