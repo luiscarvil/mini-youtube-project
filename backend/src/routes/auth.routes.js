@@ -1,7 +1,7 @@
 import {Router} from 'express'
 import { AuthController } from '../controllers/auth.controller.js'
 import { sigInValidator, verifySignUp, verifySignIn } from '../validators/index.js'
-import { validRequest } from '../middleware/request.middleware.js'
+import { validRequest } from '../middleware/index.js'
 export const authRouter = Router()
 const prefix = '/auth'
 const controller = new AuthController()

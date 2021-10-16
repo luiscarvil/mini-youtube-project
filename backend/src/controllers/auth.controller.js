@@ -8,7 +8,7 @@ export class AuthController extends BaseController{
         this.USER_CONFIRM = true
 
 
-        this.USER_TYPE = 'propietario'
+        this.USER_TYPE = 'user'
       }
     signUp = async (req, res, next) =>{
         const body = req.body
@@ -66,11 +66,11 @@ export class AuthController extends BaseController{
             const session = await sessionService.createSession(userExist._id, expiration)
 
             const token = await jwtService.sign({
-                user: userExist._id, user_type: userExist.user_type,
+                user: userExist._id, user_type: userExist.userType,
                 session:session._id
             })
 
-            res.set({Autorization: `Bearer ${token}`})
+            res.set({Authorization: `${token}`})
             res.send({message: 'Sesion creada'})
         } catch (err){
             console.log(err.message)

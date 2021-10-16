@@ -24,10 +24,10 @@ const userSchema = mongoose.Schema({
         type:String,
         default:"user",
         trim:true,
-       /*  enum: {
+        enum: {
             values: ["admin","user"],
             message: '{VALUE} is not supported'
-          } */
+        }
     },
     state:{
         type: Boolean,

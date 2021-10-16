@@ -69,7 +69,7 @@ export default class Api {
             origin: function (origin, callback) {
               console.log('request origin ---->', origin)
               if (allowedOrigins.indexOf(origin) === -1) {
-                 return callback(new CustomError('Acceso no permitido '), false)
+                // return callback(new CustomError('Acceso no permitido '), false)
               }
               return callback(null, true)
             }

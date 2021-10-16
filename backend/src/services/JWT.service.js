@@ -5,6 +5,9 @@ const JWT_OPTIONS = {
     algorithm: 'RS512',
     noTimestamp: true
   }
+  const JWT_VERIFY_OPTIONS = {
+    algorithms: ['RS512']
+  }
 export class JWTService {
 
     constructor(expiresIn) {

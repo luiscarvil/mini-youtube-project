@@ -4,15 +4,15 @@ export class VideosService extends BaseService {
   constructor(body, params, query) {
     super(body, params, query);
   }
-  saveVideo = async (video_key) => {
-    const { title, description, video_url, user_owner } = this.body;
+  saveVideo = async (video_key, user) => {
+    const { title, description } = this.body;
     try {
       const videoForm = {
         _id: this.mongooseId,
         title,
         description,
         video_key,
-        user_owner: this.mongooseId,
+        user_owner: user,
       };
       //console.log("here the creation", videoForm)
       return await new this.model.VideosModel(videoForm).save();

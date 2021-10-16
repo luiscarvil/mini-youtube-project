@@ -2,7 +2,7 @@ import { body} from 'express-validator'
 
 export const sigInValidator = [
     body('name').isString().notEmpty().withMessage("name debe ser string"),
-    body('age').isNumeric().notEmpty(),
+    //body('age').isNumeric().notEmpty(),
     body('email').isEmail().notEmpty(),
     body('password').isString().notEmpty()
 ]

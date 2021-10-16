@@ -6,19 +6,38 @@ export class VideosController extends BaseController {
   }
 
   uploadFile = async (req, res, next) => {
-    console.log("here the body", req.body)
+    const user = req.user
+    const file = req.file
     try {
+     
+      await this.verifyValidVideoFormats(file)
+      
+      console.log("-------->",req.file)
       const serviceS3 = new this.services.S3Service(req.file);
       const videoService = new this.services.VideosService(req.body)
 
       const fileUpload = await serviceS3.uploadFile();
-      await videoService.saveVideo(fileUpload.key) 
+      await videoService.saveVideo(fileUpload.key, user) 
       res.send({ message: "Archivo cargado satisfactoriamente", error: null});
     } catch (error) {
       console.log(error);
       next(error);
     }
   };
+
+  verifyValidVideoFormats = (file) =>{
+    const videoTypes = ['video/x-ms-asf','video/x-flv','video/mp4','application/x-mpegURL','video/MP2T','video/3gpp','video/quicktime','video/x-msvideo','video/x-ms-wmv','video/avi']
+    if (videoTypes.indexOf(file.mimetype) === -1){
+      throw new this.errors.CustomError(`Formato '${file.mimetype}' no aceptado` )
+    }
+    const videoExt = ['flv', 'm4v', 'avi','mpg','mp4', 'webm', 'ts', '3gp' ];
+    const extensionVideo = file.originalname.split('.')
+
+    if (videoExt.indexOf(extensionVideo[1]) === -1){
+      throw new this.errors.CustomError(`Formato '${file.originalname}' no aceptado` )
+    }
+
+  }
 
   uploadVideoThumbnails = async (req, res, next) => {
     try {
@@ -93,7 +112,12 @@ export class VideosController extends BaseController {
     const params = req.params
     try {
       const serviceVideos = new this.services.VideosService(null, params);
+      const serviceReactions = new this.services.ReactionsService()
       const findVideo = await serviceVideos.searchVideoByWord()
+      if (findVideo?.length > 0){
+
+      }
+
       res.send(findVideo)
     } catch (err) {
       console.log(err)

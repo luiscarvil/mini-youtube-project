@@ -23,7 +23,7 @@ export class ReactionsService extends BaseService {
     }
 
 
-    findReactionsByVideo = async () => {
+    findReactionsByVideo = async (video) => {
         const { video_id} = this.params
         return this.model.ReactionsModel.find({video_id})
     }
@@ -31,4 +31,10 @@ export class ReactionsService extends BaseService {
         const { video_id, user_id} = this.params
         return this.model.ReactionsModel.findOne({video_id, user_id})
     }
+    findReactionsByVideoId = async () => {
+        const { video_id} = this.params
+        return this.model.ReactionsModel.find({video_id})
+    }
+    
+    
 }

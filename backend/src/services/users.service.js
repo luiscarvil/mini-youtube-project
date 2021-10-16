@@ -12,7 +12,7 @@ export class UserService extends BaseService {
         _id: this.mongooseId,
         name,
         email,
-        age,
+        //age,
         userType,
         state,
       };

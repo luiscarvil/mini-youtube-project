@@ -28,7 +28,7 @@ export class ReactionsController extends BaseController{
                 totalReactions += value.interaction 
             })
             totalReactions = Math.round(totalReactions/reactions.length)
-            res.send({reactions, totalReactions})
+            res.send({reactions, total: totalReactions?totalReactions:0})
         }catch(err){
             console.log(err)
             next(err)

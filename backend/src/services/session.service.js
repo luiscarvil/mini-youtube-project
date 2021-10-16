@@ -9,4 +9,6 @@ export class SessionService extends BaseService {
      // console.log("Here the session-->", formSession)
     return new this.model.SessionModel(formSession).save();
   };
+  get = async _id => this.model.SessionModel.findById(_id)
+  
 }
