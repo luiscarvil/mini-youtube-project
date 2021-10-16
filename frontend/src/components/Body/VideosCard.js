@@ -1,5 +1,4 @@
 import React from "react";
-import axios from "axios";
 
 const VideosCard = ({ video, changeCurrentVideo }) => {
     console.log(video)
