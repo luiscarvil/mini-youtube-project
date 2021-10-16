@@ -1,4 +1,5 @@
 import {Amplify, Auth} from 'aws-amplify'
+import { CustomError } from '../errors/custom.error.js';
 import { BaseService } from "./base.service.js";
 
 const cognitoConf = {
@@ -25,7 +26,8 @@ export class CognitoService {
     }
   
     confirmSignUp = async () => {
-        return Auth.confirmSignUp(this.body.email, this.body.code);
+        console.log("conf", this.body)
+        return Auth.confirmSignUp(this.body.email, this.body.verification);
     }
   
     passwordRecovery = async () => {
@@ -33,7 +35,12 @@ export class CognitoService {
     }
   
     logOut = async () => {
+        try{
       return Auth.signOut()
+        }
+        catch(err){
+            throw new CustomError("Error al cerrar sesion")
+        }
     }
   
     resendCode = async () => {

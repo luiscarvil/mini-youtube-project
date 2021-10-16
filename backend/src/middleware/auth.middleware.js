@@ -21,17 +21,21 @@ class JWTMiddleware {
         ...(await service.verify(token))
       }
      // console.log("here the req", session)
+     const dateNow = moment()
+     console.log(session)
       const sessionExist = await sessionService.get(session.session)
+      console.log("dads",sessionExist)
       if (!sessionExist){
           next(new AuthError())
       }
       const sessionDate = moment(sessionExist.expiration)
-      const dateNow = moment()
       if (sessionDate < dateNow){
+          await sessionService.delete(sessionExist._id)
           next(new AuthError())
-      }
-      req.user = sessionExist.user_session
-
+        }
+        req.user = sessionExist
+        console.log("here",req.user)
+       // console.log("here", sessionDate, dateNow, sessionId)
       next()
       
     } catch (e) {

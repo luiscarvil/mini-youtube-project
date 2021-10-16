@@ -6,11 +6,13 @@ export class ReactionsController extends BaseController{
     }
     createReaction = async ( req, res, next) => {
         const body = req.body
+        const user = req.user.user_session
         try{
+           
             const reactionService = new this.services.ReactionsService(body)
-            const existReaction = await reactionService.findReactionAndUpdate()
+            const existReaction = await reactionService.findReactionAndUpdate(user)
             if (!existReaction){
-            await reactionService.createReaction()
+            await reactionService.createReaction(user)
             }
             res.send({ message: `se ha agregado la valoración: ${body.interaction}`, error: null })
         }catch(err){

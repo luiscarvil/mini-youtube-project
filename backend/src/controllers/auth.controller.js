@@ -35,8 +35,8 @@ export class AuthController extends BaseController{
            const service = new this.services.CognitoService(body)
             const userService = new this.services.UserService(body)
             // TODO transaccion para devolver el estado en caso de que no se pueda actualizar en cognito
-            await userService.updateUserStatus(userState)
             const response = await service.confirmSignUp()
+            await userService.updateUserStatus(userState)
             //const userCreation = await  userService.creationUser(userState)
             res.send({message: "Creado correctamente", userSub: response.userSub/* , userCreation */})
 
@@ -81,4 +81,20 @@ export class AuthController extends BaseController{
 
         }
     }
+
+    logOut = async (req, res, next) => {
+        try {
+          const service = new this.services.CognitoService(req.body)
+          const response = await service.logOut()
+          const sessionService = new this.services.SessionService()
+            console.log("here the logout",req.user)
+          await sessionService.delete(req.user.session)
+          console.log(response)
+          res.send({message: 'ok'})
+        } catch (err) {
+          console.error(err)
+          next(err)
+        }
+      }
+      // TODO cambio de contraseña para usuario
 }

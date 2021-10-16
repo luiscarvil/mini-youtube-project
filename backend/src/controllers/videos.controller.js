@@ -6,7 +6,7 @@ export class VideosController extends BaseController {
   }
 
   uploadFile = async (req, res, next) => {
-    const user = req.user
+    const user = req.user.user_session
     const file = req.file
     try {
      
@@ -114,8 +114,8 @@ export class VideosController extends BaseController {
       const serviceVideos = new this.services.VideosService(null, params);
       const serviceReactions = new this.services.ReactionsService()
       const findVideo = await serviceVideos.searchVideoByWord()
-      if (findVideo?.length > 0){
-
+      if (findVideo?.length === 0){
+        throw new this.errors.CustomError("No se han encontrado registros")
       }
 
       res.send(findVideo)

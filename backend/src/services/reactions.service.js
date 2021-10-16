@@ -5,21 +5,21 @@ export class ReactionsService extends BaseService {
         super(body, params, query);
     }
 
-    createReaction = async () => {
-        const { user_id, video_id, interaction } = this.body
+    createReaction = async (user_id) => {
+        const { video_id, interaction } = this.body
         const reactionForm = {
             _id: this.mongooseId,
             video_id,
             user_id,
             interaction,
-            user_owner: this.mongooseId
+            //user_owner: this.mongooseId
         }
         return this.model.ReactionsModel(reactionForm).save()
     }
 
-    findReactionAndUpdate = async () => {
-        const { user_id, video_id, interaction } = this.body
-        return this.model.ReactionsModel.findOneAndUpdate({user_id, video_id}, {interaction})
+    findReactionAndUpdate = async (user_id) => {
+        const {  video_id, interaction } = this.body
+        return this.model.ReactionsModel.findOneAndUpdate({user_id: user_id.toString(), video_id}, {interaction})
     }
 
 

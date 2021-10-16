@@ -8,7 +8,6 @@ const validateIds = id =>{
 
 export const createReactionValidator = [
     body('video_id').custom(validateIds),
-    body('user_id').custom(validateIds),
     body('interaction').isInt().custom(inter => {
         if (inter < 1 || inter > 5 ) return false
         return true

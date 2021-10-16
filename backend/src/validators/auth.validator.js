@@ -8,7 +8,7 @@ export const sigInValidator = [
 ]
 export const verifySignUp = [
     body('email').isEmail().notEmpty(),
-    body('code').isString().notEmpty()
+    //body('code').isString().notEmpty()
 ]
 export const verifySignIn = [
     body('email').isEmail().notEmpty(),
