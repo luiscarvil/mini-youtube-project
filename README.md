@@ -1,6 +1,5 @@
 # mini-youtube-project
 course -> mini youtube project
-
 ## Instrucciones
 
 Please download the project by 
@@ -25,9 +24,17 @@ npm i
 --------------------------------------------
 # the database in mongodb server is configured in the ``` .env``` file, as well as the necessary credentials for the connection with the s3 bucket and user registration credentials in cognito
 
-
+- paste the ``` .env ``` file in the ```./backend``` / folder
+ 
 -----------------------------------------------------------------
 # the file ``` generate-keys.sh ``` is needed to be able to use jwt (necessary for the verification of users in the routes)
+- paste the ```generate-keys ``` file in the ```./backend/src/keys ``` / folder
+generate-keys.sh needs to be run in that folder (./keys)
+run with:
+```
+./generate-keys.sh
+```
+
 
 
 ## the backend is divided by
